@@ -1,5 +1,6 @@
 package sampa.com.databaseexample;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -33,9 +35,16 @@ public class MainActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name = inputName.getText().toString().trim();
-                int age = Integer.parseInt(inputAge.getText().toString());
-                helper.addData(name, age);
+                if(inputName.getText().toString().trim().length() == 0 || inputAge.getText().toString().trim().length() == 0) {
+                    Snackbar.make(findViewById(R.id.content_main), "Invalid input", Snackbar.LENGTH_LONG).show();
+                }
+                else {
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    String name = inputName.getText().toString().trim();
+                    int age = Integer.parseInt(inputAge.getText().toString());
+                    helper.addData(name, age);
+                }
             }
         });
 
