@@ -42,8 +42,14 @@ public class MainActivity extends AppCompatActivity {
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                     String name = inputName.getText().toString().trim();
-                    int age = Integer.parseInt(inputAge.getText().toString());
-                    helper.addData(name, age);
+                    try {
+                        int age = Integer.parseInt(inputAge.getText().toString());
+                        helper.addData(name, age);
+                    }
+                    catch (Exception e) {
+                        Snackbar.make(findViewById(R.id.content_main), "Invalid age", Snackbar.LENGTH_LONG).show();
+                    }
+
                 }
             }
         });
