@@ -37,6 +37,7 @@ public class DataAdapter extends ArrayAdapter<Data> {
 
         viewHolder.nameItemView.setText(data.getName());
         viewHolder.ageItemView.setText(String.valueOf(data.getAge()));
+        viewHolder.id = data.getId();
 
         return convertView;
     }
@@ -44,5 +45,8 @@ public class DataAdapter extends ArrayAdapter<Data> {
     static class ViewHolderItem {
         TextView nameItemView;
         TextView ageItemView;
+        int id;
     }
+
+
 }

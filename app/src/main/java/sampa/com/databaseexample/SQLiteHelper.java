@@ -37,7 +37,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         ArrayList<Data> data = new ArrayList<Data>();
         c.moveToFirst();
         while(c.isAfterLast() == false) {
-            Log.d("Added: ", c.getString(1) + ", " + c.getInt(2));
             data.add(new Data(c.getInt(0), c.getString(1), c.getInt(2)));
             c.moveToNext();
         }
@@ -45,4 +44,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return data;
     }
 
+    public void deleteRecord(int id) {
+        db.execSQL("DELETE FROM data WHERE _id=" + id);
+    }
 }

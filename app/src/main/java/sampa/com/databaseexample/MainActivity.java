@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -58,9 +59,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ArrayList<Data> data = helper.getData();
-                ListView listView = (ListView) findViewById(R.id.listView);
-                DataAdapter adapter = new DataAdapter(getBaseContext(), data);
+                final ListView listView = (ListView) findViewById(R.id.listView);
+                final DataAdapter adapter = new DataAdapter(getBaseContext(), data);
                 listView.setAdapter(adapter);
+                listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        DataAdapter.ViewHolderItem item = (DataAdapter.ViewHolderItem) view.getTag();
+                        helper.deleteRecord(item.id);
+                        adapter.remove(adapter.getItem(position));
+                        return true;
+                    }
+                });
             }
         });
     }
